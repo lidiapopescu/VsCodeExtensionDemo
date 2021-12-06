@@ -1,7 +1,7 @@
 {
-  "name": "helloworld",
-	"displayName": "HelloWorld",
-	"description": "",
+  "name": "vscodeextensiondemo",
+	"displayName": "VsCode Extension Demo",
+	"description": "VsCode Extension development. Basic functionalities sample.",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.62.0"
@@ -9,17 +9,28 @@
 	"categories": [
 		"Other"
 	],
+	"keywords": [
+		"lidia",
+		"popescu",
+		"LPopescu",
+		"PLidia"
+	],
 	"activationEvents": [
-        "onCommand:helloworld.helloWorld"
+        "onCommand:vscodedemo.helloWorld",
+		"onCommand:vscodedemo.currentTime"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "helloworld.helloWorld",
+				"command": "vscodedemo.helloWorld",
 				"title": "Hello World"
+			},
+			{
+				"command": "vscodedemo.currentTime",
+				"title": "Current Time and Date"
 			}
-		]
+		]		
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
