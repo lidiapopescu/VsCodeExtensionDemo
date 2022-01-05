@@ -11,19 +11,34 @@ import org.eclipse.lsp4j.services.LanguageServer;
 import org.eclipse.lsp4j.services.TextDocumentService;
 import org.eclipse.lsp4j.services.WorkspaceService;
 
+import com.demo.langserver.commons.LanguageServerContext;
+import com.demo.langserver.core.LSClientLogger;
+import com.demo.langserver.core.context.LanguageServerContextImpl;
+
 import java.util.concurrent.CompletableFuture;
 
 public class DemoLanguageServer implements LanguageServer, LanguageClientAware {
-    private TextDocumentService textDocumentService;
-    private WorkspaceService workspaceService;
+    
+	private final TextDocumentService textDocumentService;
+    private final WorkspaceService workspaceService;
+    private final LanguageServerContext serverContext;
     private LanguageClient client;
+    
     private int errorCode = 1;
-
+    private LSClientLogger clientLogger;
+    
     public DemoLanguageServer() {
-        this.textDocumentService = new DemoTextDocumentService();
-        this.workspaceService = new DemoWorkspaceService();
+    	this(new LanguageServerContextImpl());
     }
 
+    public DemoLanguageServer(LanguageServerContext serverContext) {
+    	this.serverContext = serverContext;
+        this.textDocumentService = new DemoTextDocumentService(this.serverContext);
+        this.workspaceService = new DemoWorkspaceService(this.serverContext);
+        this.clientLogger = LSClientLogger.getInstance(this.serverContext);
+		clientLogger.logMessage("Demo LanguageServer has been instantiated "); // doesn't show?
+    }
+    
     @Override
     public CompletableFuture<InitializeResult> initialize(InitializeParams initializeParams) {
         // Initialize the InitializeResult for this LS.
@@ -33,14 +48,22 @@ public class DemoLanguageServer implements LanguageServer, LanguageClientAware {
         initializeResult.getCapabilities().setTextDocumentSync(TextDocumentSyncKind.Full);
         CompletionOptions completionOptions = new CompletionOptions();
         initializeResult.getCapabilities().setCompletionProvider(completionOptions);
+        
+        clientLogger.logMessage("Demo LanguageServer initialize()"); //works
         return CompletableFuture.supplyAsync(()->initializeResult);
     }
 
+    
+    @Override
+    public void initialized() {
+    	clientLogger.logMessage("Demo LanguageServer initialized() ");// works
+//    	LanguageServer.super.initialized();
+    }
     @Override
     public CompletableFuture<Object> shutdown() {
         // If shutdown request comes from client, set the error code to 0.
         errorCode = 0;
-        return null;
+        return CompletableFuture.supplyAsync(Object::new);
     }
 
     @Override
@@ -65,5 +88,8 @@ public class DemoLanguageServer implements LanguageServer, LanguageClientAware {
     public void connect(LanguageClient languageClient) {
         // Get the client which started this LS.
         this.client = languageClient;
+//        this.serverContext.setClient(this.client);
+        this.clientLogger = LSClientLogger.getInstance(this.serverContext);
+    	this.clientLogger.initialize(this.client, this.serverContext);
     }
 }

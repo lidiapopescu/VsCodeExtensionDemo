@@ -7,7 +7,7 @@ import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-lan
 
 
 // Name of the launcher class which contains the main.
-const main: string = 'StdioLauncher';
+const main: string = 'demo.StdioLauncher';
 
 
 // this method is called when your extension is activated
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// VsCodeTraining\Launcher\target\launcher.jar
 		let classPath = path.join(__dirname, '..', '..', '.', 'Launcher', 'target', 'launcher.jar');
 		console.log(`::: Using classPath = ${classPath}`);
-		const args: string[] = ['-cp', classPath, 'StdioLauncher'];
+		const args: string[] = ['-cp', classPath, main];
 	
 		// Set the server options
 		let serverOptions: ServerOptions = {

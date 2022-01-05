@@ -1,0 +1,4 @@
+# generated from npm install vscode
+node_modules/ 
+package-lock.json
+out/

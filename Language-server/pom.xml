@@ -9,5 +9,5 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>language-server</artifactId>
   <packaging>jar</packaging>
-  <name>Language-server</name>
+  <name>MyDemo Language-server</name>
 </project>
