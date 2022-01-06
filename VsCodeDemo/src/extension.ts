@@ -9,7 +9,6 @@ import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-lan
 // Name of the launcher class which contains the main.
 const main: string = 'demo.StdioLauncher';
 
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {

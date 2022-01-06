@@ -19,7 +19,7 @@ public class DemoTextDocumentService implements TextDocumentService {
 	public DemoTextDocumentService(LanguageServerContext serverContext) {
 		this.serverContext = serverContext;
 		this.clientLogger = LSClientLogger.getInstance(this.serverContext);
-		clientLogger.logMessage("Demo DemoTextDocumentService has been instantiated ");
+		clientLogger.logMessage("Demo DemoTextDocumentService has been instantiated ");// not printed?
 	}
 	
 	@Override
@@ -160,21 +160,25 @@ public class DemoTextDocumentService implements TextDocumentService {
 
     @Override
     public void didOpen(DidOpenTextDocumentParams didOpenTextDocumentParams) {
-
+    	this.clientLogger.logMessage("Operation '" + "text/didOpen" +
+                "' {fileUri: '" + didOpenTextDocumentParams.getTextDocument().getUri() + "'} opened");
     }
 
     @Override
     public void didChange(DidChangeTextDocumentParams didChangeTextDocumentParams) {
-
+    	this.clientLogger.logMessage("Operation '" + "text/didChange" +
+                "' {fileUri: '" + didChangeTextDocumentParams.getTextDocument().getUri() + "'} Changed");
     }
 
     @Override
     public void didClose(DidCloseTextDocumentParams didCloseTextDocumentParams) {
-
+    	this.clientLogger.logMessage("Operation '" + "text/didClose" +
+                "' {fileUri: '" + didCloseTextDocumentParams.getTextDocument().getUri() + "'} Closed");
     }
 
     @Override
     public void didSave(DidSaveTextDocumentParams didSaveTextDocumentParams) {
-
+    	this.clientLogger.logMessage("Operation '" + "text/didSave" +
+                "' {fileUri: '" + didSaveTextDocumentParams.getTextDocument().getUri() + "'} Saved");
     }
 }

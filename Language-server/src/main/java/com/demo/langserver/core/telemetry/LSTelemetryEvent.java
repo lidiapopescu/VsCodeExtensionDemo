@@ -17,7 +17,6 @@ package com.demo.langserver.core.telemetry;
 
 import com.demo.langserver.commons.LSOperation;
 
-//import com.asml.langserver.commons.LSOperation;
 
 /**
  * https://microsoft.github.io/language-server-protocol/specifications/specification-current/#telemetry_event
